@@ -13,13 +13,9 @@ class AccountRepository
         $this->pdo = $db->getDBConnection();
     }
 
-    public function createAccountAndUserTransaction($email, $passhash)
+    public function createAccountAndUserTransaction($name, $surname, $phone, $email, $passhash)
     {
-        echo "-------------";
-        $role = 'user';
-        
         try {
-
             $beginTransaction = $this->pdo->prepare("START TRANSACTION");
             $beginTransaction->execute();
 
@@ -27,7 +23,7 @@ class AccountRepository
             $stmtInsertAccount->execute([
                 ':email' => $email,
                 ':passhash' => $passhash,
-                ':role' => $role
+                ':role' => 'user'
             ]);
 
             $stmtGetInsertedAccountId = $this->pdo->prepare("SELECT id FROM account WHERE email = :email");
@@ -35,11 +31,6 @@ class AccountRepository
                 ':email' => $email
             ]);
             $accountId = $stmtGetInsertedAccountId->fetchColumn();
-
-            /* Testing vars - delete later and add to params*/
-            $name = 'Nametest' . $accountId;
-            $surname = 'Surnametest' . $accountId;
-            $phone = $accountId . '555' . $accountId;
 
             print('accountId: ' . $accountId);
 

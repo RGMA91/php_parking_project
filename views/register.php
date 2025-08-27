@@ -9,6 +9,15 @@
 
 <body>
     <form method="post" action="/account/create">
+        <label for="inputName">Name:</label>
+        <input type="text" name="name" id="inputName">
+
+        <label for="inputSurname">Surname:</label>
+        <input type="text" name="surname" id="inputSurname">
+
+        <label for="inputPhone">Phone:</label>
+        <input type="text" name="phone" id="inputPhone">
+
         <label for="inputEmail">Email:</label>
         <input type="text" name="email" id="inputEmail">
 
