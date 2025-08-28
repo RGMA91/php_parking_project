@@ -6,7 +6,7 @@
     <title>Login</title>
 </head>
 <body>
-<form method="post" action="">
+<form method="post" action="/account/authenticate">
     <label for="inputEmail">Email:</label>
     <input type="text" name="email" id="inputEmail">
 

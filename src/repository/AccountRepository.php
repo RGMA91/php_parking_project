@@ -1,6 +1,8 @@
 <?php
 
 require_once(__DIR__ . "/../../configuration/DatabaseConfiguration.php");
+require_once(__DIR__ . "/../model/Account.php");
+
 
 class AccountRepository
 {
@@ -57,6 +59,25 @@ class AccountRepository
 
             throw $e;
         }
+    }
+
+    public function getAccountByEmail($email) {
+        $stmt = $this->pdo->prepare("SELECT * FROM account WHERE email = :email LIMIT 1");
+        $stmt->execute([':email' => $email]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            return new Account(
+                $row['id'],
+                $row['email'],
+                $row['passhash'],
+                $row['role'],
+                $row['created_at'],
+                $row['updated_at'],
+                $row['deleted']
+            );
+        }
+        return null;
     }
 
 }
