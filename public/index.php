@@ -25,8 +25,7 @@ $router->get('/resource/register', 'AccountController@showRegisterForm');
 $router->get('/resource/login', 'AccountController@showLoginForm');
 $router->post('/account/create', 'AccountController@create');
 $router->post('/account/authenticate', 'AccountController@authenticate');
-$router->get('/users', 'AccountController@index');
-$router->get('/user/{id}', 'AccountController@show');
+$router->post('/jwtvalidation', 'AuthorizationController@validate');
 
 
 // Dispatch request

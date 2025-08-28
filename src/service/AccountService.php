@@ -20,15 +20,15 @@ class AccountService {
         $this->accountRepository->createAccountAndUserTransaction($name, $surname, $phone, $email, $hashpass);
     }
 
-    public function authenticateUserAndReturnJwt($email, $password) {
+    public function authenticateUserAndReturnJwt($email, $password): string|null {
 
         $account = $this->accountRepository->getAccountByEmail($email);
 
-        if (password_verify($password, $account->passhash)) {
+        if ($account && password_verify($password, $account->passhash)) {
             $jwt = $this->authorizationService->generateJWT($email, $password, $account->role);
-            echo 'Password is valid!, JWT: '. $jwt;
+            return $jwt;
         } else {
-            echo 'Invalid password.';
+            return null;
         }
 
     }

@@ -35,10 +35,18 @@ class AccountController {
     }
 
     public function authenticate(){
-        $email = filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL);
-        $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
+        $input = json_decode(file_get_contents('php://input'), true);
+        $email = $input['email'] ?? '';
+        $password = $input['password'] ?? '';
 
-        $this->accountService->authenticateUserAndReturnJwt($email, $password);
+        $jwt = $this->accountService->authenticateUserAndReturnJwt($email, $password);
+        header('Content-Type: application/json');
+        if ($jwt) {
+            echo json_encode(['jwt' => $jwt]);
+        } else {
+            http_response_code(401);
+            echo json_encode(['error' => 'Invalid credentials']);
+        }
     }
 
 }
