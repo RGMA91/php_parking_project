@@ -32,8 +32,6 @@ class AccountRepository
             ]);
             $accountId = $stmtGetInsertedAccountId->fetchColumn();
 
-            print('accountId: ' . $accountId);
-
             $stmtInsertUser = $this->pdo->prepare("INSERT INTO user (account_id, name, surname, phone) VALUES (:account_id, :name, :surname, :phone)");
             $stmtInsertUser->execute([
                 ':account_id' => $accountId,
@@ -49,6 +47,13 @@ class AccountRepository
 
             $rollback = $this->pdo->prepare("ROLLBACK;");
             $rollback->execute();
+
+            // Check for duplicate entry error (MySQL error code 1062)
+            if ($e->getCode() == 23000 && strpos($e->getMessage(), '1062') !== false) {
+                http_response_code(409);
+                echo json_encode(['error' => 'Conflict: Email already registered']);
+                exit;
+            }
 
             throw $e;
         }
