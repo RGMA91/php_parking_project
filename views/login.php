@@ -6,7 +6,7 @@
     <title>Login</title>
 </head>
 <body>
-<form id="loginForm" method="post" action="/account/authenticate">
+<form id="loginForm" method="post" action="/account/login">
     <label for="inputEmail">Email:</label>
     <input type="text" name="email" id="inputEmail">
 
@@ -14,6 +14,7 @@
     <input type="password" name="password" id="inputPassword">
 
     <input type="submit" value="Submit">
+    <div id="error_message"></div>
 </form>
 <script>
 document.getElementById('loginForm').addEventListener('submit', async function(e) {
@@ -21,7 +22,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     const email = document.getElementById('inputEmail').value;
     const password = document.getElementById('inputPassword').value;
 
-    const response = await fetch('/account/authenticate', {
+    const response = await fetch('/account/login', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({email, password})
@@ -30,11 +31,10 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     const data = await response.json();
     if (data.jwt) {
         localStorage.setItem('jwt', data.jwt);
-        alert('Login successful!');
         // Redirect:
         window.location.href = '/';
     } else {
-        alert('Login failed!');
+        document.getElementById('error_message').innerHTML = `<p>Wrong credentials, try again</p>`;
     }
 });
 </script>

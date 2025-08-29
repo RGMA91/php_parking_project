@@ -34,7 +34,7 @@ class AccountController {
         $this->accountService->createUserAccount($name, $surname, $phone, $email, $password);
     }
 
-    public function authenticate(){
+    public function login(){
         $input = json_decode(file_get_contents('php://input'), true);
         $email = $input['email'] ?? '';
         $password = $input['password'] ?? '';

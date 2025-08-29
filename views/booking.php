@@ -10,8 +10,7 @@
 <body>
     <h1>Booking Menu</h1>
     <div id="menu"></div>
-    <form method="post" action="/booking_handler.php">
-
+    <form method="post" action="/booking/create">
         <?php
         require_once __DIR__ . '/../src/controller/ParkingController.php';
 
@@ -19,8 +18,8 @@
         $parkingList = $parkingController->getParkingList();
 
         if (!empty($parkingList)) {
-            echo '<label for="parking_select">Select Parking:</label>';
-            echo '<select id="parking_select" name="parking_id">';
+            echo '<label for="parking-select">Select Parking:</label>';
+            echo '<select id="parking-select" name="parking-id">';
             foreach ($parkingList as $parking) {
                 echo '<option value="' . htmlspecialchars($parking->id) . '">' . htmlspecialchars($parking->name) . '</option>';
             }
@@ -30,16 +29,23 @@
         }
         ?>
 
-        <label for="entry-time">Enter after:</label>
-        <input type="datetime-local" id="meeting-time" name="meeting-time" value="2025-08-29T19:30"
+        <label for="access-time">Enter after:</label>
+        <input type="datetime-local" id="access-time" name="access-time" value="2025-08-29T19:30"
             min="2025-08-29T00:00" max="2026-08-29T00:00" />
 
-        <label for="entry-time">Exit before:</label>
-        <input type="datetime-local" id="meeting-time" name="meeting-time" value="2025-08-30T19:30"
+        <label for="exit-time">Exit before:</label>
+        <input type="datetime-local" id="exit-time" name="exit-time" value="2025-08-30T19:30"
             min="2025-08-29T00:00" max="2026-08-29T00:00" />
+
+        <!-- JWT hidden input -->
+        <input type="hidden" id="jwt-token" name="jwt-token" value="" />
 
         <button type="submit">Book</button>
     </form>
+    <script>
+        // Example: get JWT from localStorage and set it in the hidden input
+        document.getElementById('jwt-token').value = localStorage.getItem('jwt') || '';
+    </script>
     <script src="/js/functions.js"></script>
 </body>
 
