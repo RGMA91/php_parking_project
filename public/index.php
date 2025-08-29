@@ -25,7 +25,15 @@ $router->get('/resource/register', 'AccountController@showRegisterForm');
 $router->get('/resource/login', 'AccountController@showLoginForm');
 $router->post('/account/create', 'AccountController@create');
 $router->post('/account/authenticate', 'AccountController@authenticate');
+
+// Authorization endpoints:
 $router->post('/jwtvalidation', 'AuthorizationController@validate');
+
+// Parking endpoints:
+$router->get('/parking/list','ParkingController@getParkingList');
+
+// Booking endpoints:
+$router->get('/resource/booking','BookingController@getBookingForm');
 
 
 // Dispatch request

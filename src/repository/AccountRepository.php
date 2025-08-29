@@ -62,7 +62,7 @@ class AccountRepository
     }
 
     public function getAccountByEmail($email) {
-        $stmt = $this->pdo->prepare("SELECT * FROM account WHERE email = :email LIMIT 1");
+        $stmt = $this->pdo->prepare("SELECT * FROM account WHERE email = :email AND deleted = false LIMIT 1");
         $stmt->execute([':email' => $email]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
