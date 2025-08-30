@@ -25,7 +25,7 @@ class AccountService {
         $account = $this->accountRepository->getAccountByEmail($email);
 
         if ($account && password_verify($password, $account->passhash)) {
-            $jwt = $this->authorizationService->generateJWT($email, $password, $account->role);
+            $jwt = $this->authorizationService->generateJWT($account->id, $account->email, $account->role);
             return $jwt;
         } else {
             return null;

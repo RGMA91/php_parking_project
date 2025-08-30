@@ -12,7 +12,7 @@ class BookingRepository{
         $this->pdo = $db->getDBConnection();
     }
 
-    public function transactionCheckAvailabilityAndCreateBooking($inputExitTime, $inputAccessTime, $inputParkingId, $userId) {
+    public function transactionCreateBooking($inputExitTime, $inputAccessTime, $inputParkingId, $userId) {
         
         $beginTransaction = $this->pdo->prepare("START TRANSACTION");
         $beginTransaction->execute();
@@ -26,7 +26,6 @@ class BookingRepository{
         $numberOfBookings = $stmtCountBookingsByTimeFrame->fetchColumn();
         
         $stmtGetParkingCapacityById = $this->pdo->prepare("SELECT capacity FROM parking WHERE id = :parking_id AND deleted = false");
-        $stmtGetParkingCapacityById->execute();
         $stmtGetParkingCapacityById->execute([
             ':parking_id' => $inputParkingId]);
         $capacity = $stmtGetParkingCapacityById->fetchColumn();

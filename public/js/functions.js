@@ -1,5 +1,5 @@
 async function checkJwt() {
-  const jwt = localStorage.getItem('jwt');
+  const jwt = getJwt();
   if (!jwt) {
     showGuestMenu();
     return;
@@ -15,6 +15,11 @@ async function checkJwt() {
   } else {
     showGuestMenu();
   }
+}
+
+function getJwt() {
+  const jwt = localStorage.getItem('jwt');
+  return jwt;
 }
 
 function showUserMenu() {

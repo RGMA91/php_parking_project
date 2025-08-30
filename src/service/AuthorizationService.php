@@ -6,7 +6,7 @@ class AuthorizationService {
 
         $header = json_encode(['alg' => 'HS256', 'typ' => 'JWT']);
         $payload = json_encode([
-            'sub' => $accountId,
+            'id' => $accountId,
             'email' => $email,
             'role' => $role,
             'iat' => time(),

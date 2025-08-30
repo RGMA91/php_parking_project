@@ -43,7 +43,7 @@
         <button type="submit">Book</button>
     </form>
     <script>
-        // Example: get JWT from localStorage and set it in the hidden input
+        // Get JWT from localStorage and set it in the hidden input
         document.getElementById('jwt-token').value = localStorage.getItem('jwt') || '';
     </script>
     <script src="/js/functions.js"></script>
